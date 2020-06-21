@@ -61,6 +61,13 @@ resource "azurerm_app_service" "apps1" {
   app_settings        = lookup(each.value, "app_settings", null)                                                                                   #(Optional) A key-value pair of App Settings.
   auth_settings {
     enabled = lookup(each.value, "enabled", false) #(Required) Is Authentication enabled?
+    dynamic "active_directory" {
+      for_each = merge(each.value.active_directory,{})
+      content {
+      client_id = active_directory.value.client_id
+      client_secret = active_directory.value.client_secret
+    }
+    }
     #active_directory {}
     additional_login_params        = lookup(each.value, "additional_login_params", null)        #(Optional) Login parameters to send to the OpenID Connect authorization endpoint when a user logs in. Each parameter must be in the form "key=value".
     allowed_external_redirect_urls = lookup(each.value, "allowed_external_redirect_urls", null) #(Optional) External URLs that can be redirected to as part of logging in or logging out of the app.
@@ -220,3 +227,10 @@ resource "azurerm_app_service" "apps1" {
 
   tags = local.tags
 }
+
+resource "azurerm_app_service_virtual_network_swift_connection" "apps1" {
+  for_each = var.app_services
+  app_service_id = azurerm_app_service.apps1[each.key].id
+  subnet_id      = var.subnet_id
+}
+

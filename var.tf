@@ -28,7 +28,7 @@ variable "app_service_rg" {
 # -
 variable "app_service_plans" {
   description = "The App Services plans with their properties."
-  type        = map(object({
+/*  type        = map(object({
 		                   id = string
 											 prefix = string
 											 kind = string
@@ -39,6 +39,8 @@ variable "app_service_plans" {
 											 maximum_elastic_worker_count = number
 											 per_site_scaling = bool
 										 }))
+*/
+  type = any
 }
 
 variable "existing_app_service_plans" {

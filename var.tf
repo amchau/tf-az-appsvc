@@ -87,6 +87,8 @@ variable "null_array" {
   default     = []
 }
 
+/*
 variable "subnet_id" {
 	type = string
 }
+*/

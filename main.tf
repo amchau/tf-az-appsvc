@@ -228,9 +228,10 @@ resource "azurerm_app_service" "apps1" {
   tags = local.tags
 }
 
+/*
 resource "azurerm_app_service_virtual_network_swift_connection" "apps1" {
   for_each = var.app_services
   app_service_id = azurerm_app_service.apps1[each.key].id
   subnet_id      = var.subnet_id
 }
-
+*/
